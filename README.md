@@ -2,21 +2,53 @@
 
 **d**oes **a**nyone **h**ave **a** · **d**oes **a**nyone **w**ant **a**
 
-Every Stanford dorm runs on two phrases. *daha* is someone asking to borrow or be given
-something. *dawa* is someone offering one up. It's a real culture of lending and passing things
-along, and it already works — except for one thing.
+*Built at HackMIT by a team of Stanford students.*
 
-**The two halves never find each other.** Someone posts *daha a steamer* on Tuesday. Someone
-posted *dawa my garment steamer* on Sunday. The Sunday message is four hundred messages up the
-group chat and might as well not exist, so a steamer sits in a closet in Stern while someone in
-Wilbur goes and buys one.
+---
 
-Daha is a board that remembers. You type the post exactly the way you'd type it in the group
-chat, and it tells you who already has one and how far you'd have to walk.
+## First, a word of ours you probably don't use
+
+We're Stanford students, and our campus has a piece of slang that runs the dorms. It's shouted
+into group chats a hundred times a day and it comes in exactly two halves:
+
+> **daha** — *"does anyone have a…"* — someone needs to borrow or be given something.
+>
+> **dawa** — *"does anyone want a…"* — someone has one going spare.
+
+Nobody says the whole phrase. You just say *daha a steamer* or *dawa my mini fridge* and everyone
+knows what you mean. It sounds like nothing, but it's the load-bearing structure of an entire
+lending economy: a floor of sixty students quietly passing around one iron, one tripod, one
+air mattress, one good rice cooker, instead of sixty people each buying their own.
+
+If you're reading this at MIT, you have your own version — a mailing list, a Facebook group, a
+channel somebody made in 2019. Every campus grows one. Ours just happens to have a name, which
+is how we noticed the thing that's wrong with it.
+
+## The thing that's wrong with it
+
+**The two halves never find each other.**
+
+Somebody posts *daha a steamer* on Tuesday. Somebody posted *dawa my garment steamer* on Sunday.
+By Tuesday that Sunday message is four hundred messages up the chat and might as well not exist.
+
+So a perfectly good steamer sits in a closet in one dorm while a student in another dorm walks
+to Target and buys one. Both people did everything right. The medium just has no memory.
+
+That's not a small leak. Every unmatched pair is one more thing bought that didn't need to be
+bought, and one more thing that gets left on a curb in June.
+
+## What we built
+
+Daha is a board that remembers.
+
+You type the post exactly the way you'd type it in the group chat — no forms, no dropdowns, no
+categories to pick. It works out what you mean, then tells you **who already has one, how far
+you'd have to walk, and a public spot to meet them halfway**.
 
 > **It's the dorm group chat, except it actually remembers who has what.**
 
 **Live demo:** https://melitasdsouza.github.io/daha
+*(Fourteen posts are already up. Eight of them have a match waiting that nobody has noticed.)*
 
 ---
 
@@ -59,10 +91,15 @@ It reads that as:
 | **Category** | clothing |
 
 …and answers: **"1 person has one, the closest a 3-minute walk away."** That's Amara in Stern
-Hall, who posted *"dawa my garment steamer — happy to lend it out, it lives in my closet"* two
-days ago and has been waiting ever since.
+Hall — a dorm on the east side of campus — who posted *"dawa my garment steamer — happy to lend
+it out, it lives in my closet"* two days ago and has been waiting ever since.
 
-Nobody typed the word "garment". Nobody typed a date.
+Then it tells you both to meet at **Arrillaga Dining**, two minutes from her and three from you.
+
+Nobody typed the word "garment". Nobody typed a date. Nobody agreed on a meeting spot.
+
+*(Stanford dorm names appear throughout — Wilbur, Stern, Toyon, FloMo. You don't need to know
+them; the map draws all twelve and the walk times do the work.)*
 
 ---
 
@@ -150,10 +187,22 @@ Finding the match is half of it. The other half is that **nobody wants to knock 
 stranger's door** — and nobody wants to hike across campus while the other person strolls
 downstairs.
 
-So every match comes with a designated pickup spot, chosen from eight real places students
-already say "meet you at": White Plaza (the Claw), Tresidder, Green Library steps, Arrillaga
-Dining, the Oval, Lake Lagunita, Meyer Green and EV Commons. Each one is public, lit, and
-carries its opening hours.
+So every match comes with a designated pickup spot, chosen from eight real places Stanford
+students already say "meet you at":
+
+| Spot | What it is |
+|---|---|
+| **White Plaza** (*the Claw*) | The central student plaza, named for the fountain in it |
+| **Tresidder Union** | Student union — tables, coffee, indoors when it rains |
+| **Green Library steps** | Main library, front steps, always occupied |
+| **Arrillaga Dining** | The east-campus dining hall |
+| **The Oval** | The lawn at the end of the main approach to campus |
+| **Lake Lagunita** | West campus, next to the western dorms |
+| **Meyer Green** | Open lawn between main campus and the south housing |
+| **EV Commons** | Escondido Village, for the graduate residences |
+
+Every one is public, lit, and carries its opening hours — the point being that you hand something
+to a stranger somewhere you'd be happy to stand alone at 9pm.
 
 ### Which spot, and why that one
 
@@ -211,6 +260,35 @@ bad key, timeout, malformed JSON — falls through to the rules silently.
 
 ---
 
+## Does this work anywhere but Stanford?
+
+The honest answer is that **the slang is ours and nothing else is.**
+
+Strip out the word "daha" and what's left is a structure every residential campus has: people
+who need a thing for a few days, people who have that thing going spare, no memory connecting
+them, and a walk between them that decides whether the handover actually happens.
+
+Here's what porting Daha to another campus actually costs:
+
+| What changes | Where | Effort |
+|---|---|---|
+| Dorm names and positions | `RESIDENCES` in `catalog.js` | 12 lines |
+| Pickup spots | `PICKUP_SPOTS` in `catalog.js` | 8 lines |
+| The two words | The UI copy | a find-and-replace |
+| **The matching engine** | — | **nothing** |
+| **The fair-meeting-point maths** | — | **nothing** |
+| **The item dictionary** | — | **nothing — a mini fridge is a mini fridge everywhere** |
+
+The coordinate system is deliberately campus-agnostic: any origin, any units of metres, east as
++x. Walk times fall out of the geometry rather than a routing service, so a new campus needs
+positions and nothing else.
+
+So: the culture is specific, and that's exactly why it's worth building for — a general-purpose
+"borrow things near you" app has no reason to exist, but *this* one is already how sixty people
+on a floor behave. The software is the general part.
+
+---
+
 ## What's real and what's simulated
 
 **Real:**
@@ -236,32 +314,46 @@ bad key, timeout, malformed JSON — falls through to the rules silently.
 
 ---
 
-## The 60-second demo
+## The 90-second demo
 
-> **0:00** — "Every dorm at Stanford runs on two words. *Daha* — does anyone have a. *Dawa* —
-> does anyone want a. It's a whole culture of lending and passing things down, and it lives
-> entirely in group chats."
+Written for a room that has never heard the word.
 
-> **0:12** — "Which means it barely works. I post *daha a steamer* today. Somebody posted *dawa
-> my steamer* on Sunday. That message is four hundred messages up. So there's a steamer in a
-> closet in Stern, and I go buy one."
+> **0:00** — "We're from Stanford, and we're going to teach you a word first, because the whole
+> thing falls apart otherwise. **Daha.** It means *does anyone have a*. And **dawa** — *does
+> anyone want a*. Nobody says the full phrase. You just yell *daha a steamer* into the group
+> chat and sixty people know exactly what you mean."
 
-> **0:26** — *Type `daha a steamer for formal thursday`. Press the button.* "It read that. It
-> knows 'steamer' means a garment steamer, that I want to borrow it and not keep it, and that
-> 'formal thursday' is the 24th. And it says: one person has one, three minutes away."
+> **0:15** — "It's a real lending economy. One iron, one tripod, one air mattress circulating a
+> whole floor instead of sixty people each buying their own. You've got your own version of
+> this — a mailing list, a Facebook group. Every campus grows one."
 
-> **0:40** — *Point at the match card, then the map.* "And it tells us where to meet. Not her
-> room — Arrillaga Dining, two minutes for me, three for her. It picks the spot with the
-> shortest *longer* walk, so neither of us gets stuck hiking across campus."
+> **0:28** — "And every one of them has the same bug. I post *daha a steamer* today. Somebody
+> posted *dawa my garment steamer* on Sunday. That message is four hundred messages up. So
+> there's a steamer sitting in a closet two dorms over, and I go to Target and buy one."
 
-> **0:54** — *Point at the board.* "Fourteen posts up right now. **Eight already have a match
-> waiting that nobody has noticed.** That's the entire problem, sitting right there."
+> **0:42** — *Type `daha a steamer for formal thursday`. Press the button.* "It read that. It
+> knows 'steamer' means a garment steamer, that I want to borrow it rather than keep it, and
+> that 'formal thursday' is the 24th. One person has one. Three minutes away."
 
-> **1:04** — *Click "daha a bike lock".* "And when nobody has one, it says so, and waits. The
+> **0:58** — *Point at the match card, then the map.* "And it tells us where to meet — not her
+> dorm room. Arrillaga Dining, two minutes for her, three for me. It picks the spot with the
+> shortest **longer** walk, so neither of us hikes across campus while the other strolls
+> downstairs."
+
+> **1:14** — *Point at the board.* "Fourteen posts up right now. **Eight already have a match
+> waiting that nobody has noticed.** That's the whole problem, sitting right there in the data."
+
+> **1:26** — *Click "daha a bike lock".* "And when nobody has one, it says so and waits. The
 > moment somebody posts a dawa that fits, they see you."
 
-*For a sceptic:* the matching runs with no API key at all. Claude reads messy language; the
-matching is a scoring function with four terms and eighty-five tests.
+**If a judge asks whether this only works at Stanford:** the slang is ours, the software isn't.
+Porting it is twelve lines of dorm coordinates and eight pickup spots. The matching engine, the
+fair-meeting-point maths and the item dictionary don't change — a mini fridge is a mini fridge
+everywhere.
+
+**If a judge asks what the model is actually doing:** reading language, and nothing else. The
+matching is a scoring function with four terms and eighty-five tests behind it, and it runs with
+no API key at all — the hosted demo has no server.
 
 ---
 
