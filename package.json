@@ -1,0 +1,12 @@
+{
+  "name": "daha",
+  "version": "1.0.0",
+  "description": "Daha — the campus board for \"does anyone have a\" and \"does anyone want a\".",
+  "main": "server.js",
+  "type": "commonjs",
+  "engines": { "node": ">=20" },
+  "scripts": { "start": "node server.js", "test": "node test.js" },
+  "dependencies": { "express": "^4.19.2" },
+  "license": "MIT",
+  "private": true
+}
