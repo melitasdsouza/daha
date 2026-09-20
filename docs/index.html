@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daha — does anyone have a…</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2317170F'/><circle cx='37' cy='50' r='17' fill='none' stroke='%23FF4B1F' stroke-width='10'/><circle cx='63' cy='50' r='17' fill='none' stroke='%232B44FF' stroke-width='10'/></svg>">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="mast-left">
+    <span class="mark" aria-hidden="true">
+      <svg viewBox="0 0 100 60">
+        <circle cx="34" cy="30" r="20" fill="none" stroke="var(--ask)" stroke-width="10"/>
+        <circle cx="66" cy="30" r="20" fill="none" stroke="var(--give)" stroke-width="10"/>
+      </svg>
+    </span>
+    <h1 class="wordmark">Daha</h1>
+  </div>
+
+  <p class="expand">
+    <span class="ex"><b>d</b>oes <b>a</b>nyone <b>h</b>ave <b>a</b></span>
+    <span class="slash">/</span>
+    <span class="ex"><b>d</b>oes <b>a</b>nyone <b>w</b>ant <b>a</b></span>
+  </p>
+
+  <div class="whereami">
+    <label for="from">I live in</label>
+    <select id="from"></select>
+  </div>
+</header>
+
+<main class="sheet-wrap">
+
+  <!-- ====================================================== the ask slip == -->
+  <section class="slip" aria-labelledby="slip-title">
+    <span class="slip-stamp" aria-hidden="true">pin it up</span>
+
+    <h2 id="slip-title">Type it like the group chat.</h2>
+    <p class="slip-sub">We'll tell you who already has one, and where to meet them.</p>
+
+    <div class="ask-row">
+      <input type="text" id="raw" maxlength="300" autocomplete="off" spellcheck="false"
+             placeholder="daha a steamer for formal thursday">
+      <button id="go" class="btn btn-go" type="button">Who has one?</button>
+    </div>
+
+    <div class="examples" id="examples">
+      <span class="tiny-label">Try</span>
+      <button class="ex-chip" type="button" data-raw="daha a steamer for formal thursday">daha a steamer for formal thursday</button>
+      <button class="ex-chip" type="button" data-raw="daha an air mattress, friend visiting this weekend">daha an air mattress this weekend</button>
+      <button class="ex-chip" type="button" data-raw="dawa my mini fridge, moving out next month">dawa my mini fridge</button>
+      <button class="ex-chip" type="button" data-raw="daha a bike lock for a couple of days">daha a bike lock</button>
+    </div>
+
+    <p class="status" id="status"></p>
+
+    <div class="readout" id="readout" hidden>
+      <div class="readout-bar">
+        <span class="tiny-label">Read as</span>
+        <span class="tiny-label src" id="readout-src"></span>
+      </div>
+      <div class="readout-chips" id="readout-chips"></div>
+    </div>
+
+    <div class="hits" id="hits" hidden>
+      <h3 class="hits-head" id="hits-head"></h3>
+      <div class="hit-list" id="hit-list"></div>
+      <button id="post-it" class="btn btn-pin" type="button">Pin it to the board</button>
+    </div>
+  </section>
+
+  <!-- ========================================================= two columns == -->
+  <div class="split">
+
+    <!-- --------------------------------------------------------- the board -->
+    <section class="board-col" aria-labelledby="board-title">
+      <div class="col-head">
+        <h2 id="board-title">The board</h2>
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" data-kind="" aria-selected="true">All</button>
+          <button class="tab" role="tab" data-kind="daha" aria-selected="false">Wanted</button>
+          <button class="tab" role="tab" data-kind="dawa" aria-selected="false">Going spare</button>
+        </div>
+      </div>
+
+      <p class="tally" id="tally"></p>
+      <div class="pins" id="pins"></div>
+    </section>
+
+    <!-- ----------------------------------------------------------- the map -->
+    <aside class="map-col" aria-labelledby="map-title">
+      <div class="map-panel">
+        <div class="col-head">
+          <h2 id="map-title">Campus</h2>
+          <span class="tiny-label" id="map-hint">tap a dorm to move in</span>
+        </div>
+
+        <div class="map-frame">
+          <svg id="map" viewBox="-820 -600 1760 1560" role="img"
+               aria-label="Stanford campus map with residences and pickup spots"></svg>
+        </div>
+
+        <div class="legend">
+          <span class="lg"><i class="dot you"></i> you</span>
+          <span class="lg"><i class="dot res"></i> residence</span>
+          <span class="lg"><i class="dot pick"></i> pickup spot</span>
+        </div>
+
+        <div class="route" id="route" hidden></div>
+
+        <div class="spots">
+          <p class="tiny-label">Designated pickup spots</p>
+          <ul id="spot-list"></ul>
+          <p class="spots-why">
+            Public, lit, and somewhere both of you already know. A match picks the
+            spot with the <b>shortest longer walk</b>, so neither of you hikes
+            across campus while the other strolls downstairs.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<!-- ------------------------------------------------------------- detail --- -->
+<div class="scrim" id="scrim" hidden>
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-x" id="modal-x" type="button" aria-label="Close">×</button>
+    <div id="modal-body"></div>
+  </section>
+</div>
+
+<script src="daha.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

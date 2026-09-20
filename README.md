@@ -16,6 +16,8 @@ chat, and it tells you who already has one and how far you'd have to walk.
 
 > **It's the dorm group chat, except it actually remembers who has what.**
 
+**Live demo:** https://melitasdsouza.github.io/daha
+
 ---
 
 ## Run it
@@ -113,6 +115,32 @@ with room to arrange in — three days is full marks.
 Generated deterministically from the four terms, and `npm test` asserts the explanation is
 **true** — that a match claiming "same thing" really was an exact dictionary hit, and one
 claiming "same building" really is a zero-minute walk.
+
+---
+
+## The live demo runs with no server at all
+
+GitHub Pages serves files, not processes — there is no Node and no Express behind
+https://melitasdsouza.github.io/daha. That works here only because of how the project is
+already split: `matching.js` is pure (no I/O, no clock, the caller passes the date) and
+`catalog.js` is data, so the engine moves into the browser untouched.
+
+```bash
+npm run build:pages
+```
+
+`build-pages.js` bundles those two files with the presentation helpers lifted out of `server.js`,
+then swaps the client's single `json()` call for a router that dispatches to the same handlers
+locally instead of over HTTP. Output lands in `docs/`, which is what Pages is pointed at. The
+Express app in the repo root is untouched and stays the thing you run locally.
+
+**What the static build loses:** the Claude parsing path, which needs a key and therefore a
+server. The rule parser runs instead — and because that is a real parser rather than a stub, the
+hosted demo is fully usable. The interface already labels which one read your post (`RULES` or
+`CLAUDE` in the readout), so the page stays honest about it without a disclaimer.
+
+The board is per-visitor and resets on reload, which is the right behaviour for a public demo
+nobody is moderating.
 
 ---
 
@@ -293,6 +321,8 @@ matching is a scoring function with four terms and eighty-five tests.
 | `server.js` | Express, four endpoints, and the Claude parsing path. |
 | `test.js` | 85 assertions, no framework. |
 | `public/` | One page, vanilla JS, the drawn campus map, no build step. |
+| `build-pages.js` | Bundles the engine into `docs/` for GitHub Pages. |
+| `docs/` | The generated static build. Do not edit by hand. |
 
 ### API
 
